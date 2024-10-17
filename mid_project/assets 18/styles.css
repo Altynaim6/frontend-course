@@ -1,0 +1,113 @@
+*{
+    box-sizing: border-box;
+    text-align: initial;
+    gap: initial;
+    font-family: "Roboto", Sans-serif;
+}
+
+body{
+    background-color: #55557e;
+}
+
+/* navigation section */
+.nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+  
+.nav-item {
+    padding: 30px 40px;
+    margin: 0 1px;
+    background-color: #3d3e52;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, transform 0.3s;
+}
+  
+.nav-item i {
+    font-size: 30px;
+    color: #a89ab7;  
+}
+  
+.nav-item.active {
+    background-color: #2e2c33;
+    transform: scale(1.2); 
+}
+  
+.nav-item.active i {
+    color: #ffffff; 
+    box-shadow: 2px 5px 20px 1px rgba(0,0,0,0.5);
+
+}
+  
+.nav-item:hover {
+    background-color: #3b3745;
+    cursor: pointer;
+}
+    
+
+/* main section */
+.form {
+    width: 43%;
+    border-radius: 10px;
+    box-shadow: 2px 5px 10px 1px rgba(0,0,0,0.5);
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 300px;
+    max-width:calc(100vw - 40px);
+    box-sizing:border-box;
+    position:relative;
+    background-color: #fff;
+}
+
+.header{
+    background-image: url(img/food.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 400px;
+    display: flex;
+    align-items:end;
+    justify-content: flex-start;
+    color: #fff;
+    padding: 30px 40px;
+    line-height: 0px;
+}
+.header h1{
+    font-size: 50px;
+}
+
+.location{
+    display: flex;
+    justify-content: flex-start;
+    font-size: 30px;
+}
+
+.menu p{
+    list-style: none;
+    color: #ccc;
+    line-height: 20px;
+    padding: 30px 40px;
+
+}
+.menu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 30px;
+}
+
+.line {
+    border-top: 3px solid #ccc; 
+    width: 100%;
+}
+
+
