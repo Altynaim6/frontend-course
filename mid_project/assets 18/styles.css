@@ -1,11 +1,11 @@
-*{
+* {
     box-sizing: border-box;
     text-align: initial;
     gap: initial;
     font-family: "Roboto", Sans-serif;
 }
 
-body{
+body {
     background-color: #55557e;
 }
 
@@ -20,9 +20,9 @@ body{
     margin-top: 100px;
     margin-bottom: 50px;
 }
-  
+
 .nav-item {
-    padding: 30px 40px;
+    padding: 50px 75px;
     margin: 0 1px;
     background-color: #3d3e52;
     display: flex;
@@ -30,84 +30,86 @@ body{
     align-items: center;
     transition: background-color 0.3s, transform 0.3s;
 }
-  
-.nav-item i {
-    font-size: 30px;
-    color: #a89ab7;  
+
+.nav-item img {
+    width: 45px;
+    height: 45px;
 }
-  
+
 .nav-item.active {
     background-color: #2e2c33;
-    transform: scale(1.2); 
+    transform: scale(1.2);
+    box-shadow: 3px 5px 10px 1px rgba(0, 0, 0, 0.5);
 }
-  
-.nav-item.active i {
-    color: #ffffff; 
-    box-shadow: 2px 5px 20px 1px rgba(0,0,0,0.5);
 
-}
-  
 .nav-item:hover {
     background-color: #3b3745;
     cursor: pointer;
 }
-    
+
 
 /* main section */
 .form {
-    width: 43%;
+    width: 35%;
     border-radius: 10px;
-    box-shadow: 2px 5px 10px 1px rgba(0,0,0,0.5);
+    box-shadow: 2px 5px 10px 1px rgba(0, 0, 0, 0.5);
     position: absolute;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 300px;
-    max-width:calc(100vw - 40px);
-    box-sizing:border-box;
-    position:relative;
+    margin-bottom: 200px;
+    max-width: calc(100vw - 40px);
+    box-sizing: border-box;
+    position: relative;
     background-color: #fff;
+
 }
 
-.header{
+.header {
     background-image: url(img/food.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 400px;
     display: flex;
-    align-items:end;
+    align-items: end;
     justify-content: flex-start;
     color: #fff;
-    padding: 30px 40px;
+    padding: 10px 40px;
     line-height: 0px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
-.header h1{
+
+.header h1 {
     font-size: 50px;
 }
 
-.location{
+.location {
     display: flex;
     justify-content: flex-start;
     font-size: 30px;
 }
 
-.menu p{
-    list-style: none;
-    color: #ccc;
-    line-height: 20px;
-    padding: 30px 40px;
-
-}
-.menu{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.menu {
     font-size: 30px;
-}
-
-.line {
-    border-top: 3px solid #ccc; 
     width: 100%;
 }
 
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px 40px;
+    border-bottom: 2px solid #ccc;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.food-name p,
+.count p {
+    color: #ccc;
+    margin: 0;
+}
 
