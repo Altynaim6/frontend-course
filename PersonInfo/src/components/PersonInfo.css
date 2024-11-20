@@ -32,3 +32,18 @@ div p {
 p:last-child {
     margin-bottom: 0;
 }
+
+button {
+    margin: 10px 0;
+    background-color: #fbba53;
+    color: white;
+    font-size: 16px;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #fbdb4b;
+}
