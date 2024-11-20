@@ -47,3 +47,8 @@ button {
 button:hover {
     background-color: #fbdb4b;
 }
+
+.message {
+    font-size: 18px;
+    color: #56b657;
+}

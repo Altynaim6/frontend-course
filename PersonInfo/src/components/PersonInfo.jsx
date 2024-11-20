@@ -1,4 +1,5 @@
 import "./PersonInfo.css";
+import { useState } from "react";
 
 const PersonInfo = () => {
     const person = {
@@ -10,6 +11,12 @@ const PersonInfo = () => {
         email: "altynaimunduzbaeva@gmail.com",
     };
 
+    const [message, setMessage] = useState("");
+
+    const handleClick = () => {
+        setMessage("Above the button");
+    };
+
     return (
         <div>
             <h1>{person.name}</h1>
@@ -18,7 +25,8 @@ const PersonInfo = () => {
             <p>Age: {person.age}</p>
             <p>City: {person.location}</p>
             <p>Email: {person.email}</p>
-            <button>Click</button>
+            {message && <p className="message">{message}</p>}
+            <button onClick={handleClick}>Click</button>
         </div>
     );
 };
