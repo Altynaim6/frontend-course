@@ -38,11 +38,17 @@ const DataFilter = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <ul>
-                {filteredData.map((item) => (
-                    <li key={item.id}>{item.name}</li>
-                ))}
-            </ul>
+            {filteredData.length > 0 ? (
+                <ul>
+                    {filteredData.map((item) => (
+                        <li key={item.id}>{item.name}</li>
+                    ))}
+                </ul>
+            ) : (
+                <p style={{ textAlign: 'center', color: '#6c757d', marginTop: '20px' }}>
+                    No results
+                </p>
+            )}
         </div>
     );
 };
