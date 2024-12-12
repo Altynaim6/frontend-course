@@ -25,12 +25,16 @@ imgTrash = `
 </svg>
 `;
 
-let tasks = [];
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+const saveToLocalStorage = () => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+};
 
 const addToDo = (e) => {
     e.preventDefault();
     if (!input.value.trim().length) {
-        alert('You did not write anything!');
+        alert('You didn\'t write anything!');
     } else {
         const toDo = {
             id: tasks[tasks.length - 1]?.id + 1 || 1,
@@ -38,6 +42,7 @@ const addToDo = (e) => {
             completed: false,
         };
         tasks.push(toDo);
+        saveToLocalStorage();
         renderToDos();
     }
 
@@ -62,6 +67,7 @@ const renderToDos = () => {
 
         done.addEventListener('click', () => {
             el.completed = !el.completed;
+            saveToLocalStorage();
             renderToDos();
         });
 
@@ -77,6 +83,7 @@ const renderToDos = () => {
                 const newName = prompt('Enter the new name');
                 if (newName && newName.trim().length) {
                     el.name = newName;
+                    saveToLocalStorage();
                     renderToDos();
                 }
             }
@@ -86,6 +93,7 @@ const renderToDos = () => {
             const answer = confirm('Are you sure you want to delete this task?');
             if (answer) {
                 tasks = tasks.filter(item => item.id !== el.id);
+                saveToLocalStorage();
                 renderToDos();
             }
         });
@@ -98,3 +106,12 @@ const renderToDos = () => {
 
 form.addEventListener('submit', addToDo);
 
+const addFromLS = () => {
+    const data = JSON.parse(localStorage.getItem('tasks'));
+    if (data) {
+        tasks = data;
+        renderToDos();
+    }
+};
+
+addFromLS();
