@@ -1,6 +1,9 @@
 const form = document.querySelector('form');
 const input = document.querySelector('#inp');
 const output = document.querySelector('#output');
+const allFilterBtn = document.querySelector('#allFilter');
+const completedFilterBtn = document.querySelector('#completedFilter');
+const incompleteFilterBtn = document.querySelector('#incompleteFilter');
 
 let imgDone, imgEdit, imgTrash;
 
@@ -26,6 +29,7 @@ imgTrash = `
 `;
 
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+let currentFilter = 'all'; 
 
 const saveToLocalStorage = () => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -51,7 +55,15 @@ const addToDo = (e) => {
 
 const renderToDos = () => {
     output.innerHTML = '';
-    tasks.forEach(el => {
+    let filteredTasks = tasks;
+
+    if (currentFilter === 'completed') {
+        filteredTasks = tasks.filter(task => task.completed);
+    } else if (currentFilter === 'incomplete') {
+        filteredTasks = tasks.filter(task => !task.completed);
+    }
+
+    filteredTasks.forEach(el => {
         const card = document.createElement('div');
         card.className = 'card';
         const title = document.createElement('h2');
@@ -103,6 +115,21 @@ const renderToDos = () => {
         output.append(card);
     });
 };
+
+allFilterBtn.addEventListener('click', () => {
+    currentFilter = 'all';
+    renderToDos();
+});
+
+completedFilterBtn.addEventListener('click', () => {
+    currentFilter = 'completed';
+    renderToDos();
+});
+
+incompleteFilterBtn.addEventListener('click', () => {
+    currentFilter = 'incomplete';
+    renderToDos();
+});
 
 form.addEventListener('submit', addToDo);
 
