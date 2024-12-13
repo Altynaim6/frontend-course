@@ -45,11 +45,31 @@ form {
     border-radius: 10px;
     outline: none;
     flex: 1;
-    max-width: 780px;
+    max-width: 630px;
     color: #fff;
 }
 
 .input:focus {
+    border-color: #828dff;
+    box-shadow: 0 0 8px #006769;
+}
+
+
+#dueDate {
+    padding: 15px 10px;
+    font-size: 1rem;
+    border: 2px solid #828dff;
+    background-color: #171c48;
+    border-radius: 10px;
+    outline: none;
+    color: #fff;
+    flex: 1;
+    max-width: 150px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#dueDate:focus {
     border-color: #828dff;
     box-shadow: 0 0 8px #006769;
 }
@@ -91,9 +111,9 @@ button:hover {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+.card div {
+    display: flex;
+    justify-content: end;
 }
 
 .card.done {
@@ -102,8 +122,15 @@ button:hover {
     color: #EC8305;
 }
 
+.overdue {
+    text-decoration: line-through;
+    color: red;
+    background-color: #ffe6e6;
+
+}
+
 .card h2 {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .card button {

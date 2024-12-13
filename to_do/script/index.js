@@ -28,8 +28,8 @@ let imgTrash = `
 
 let tasks = JSON.parse(localStorage.getItem('tasks')) || []
 let currentFilter = 'all'
-const API = 'https://jsonplaceholder.typicode.com/todos'
 
+const API = 'https://jsonplaceholder.typicode.com/todos'
 const getTasks = async () => {
     if (tasks.length) return;
     try {
@@ -54,21 +54,32 @@ const saveToLocalStorage = () => {
 }
 
 const addToDo = (e) => {
-    e.preventDefault();
+    e.preventDefault(); //предотвратить перезагружение страницы
     if (!input.value.trim().length) {
         alert("You didn't write anything!");
         return;
     }
-    const maxId = tasks.length ? Math.max(...tasks.map(task => task.id)) : 0;
+
+    const dueDateInput = document.querySelector('#dueDate');
+    const dueDate = dueDateInput.value ? new Date(dueDateInput.value) : null;
+
+    if (!dueDate || dueDate < new Date()) {
+        alert('Please select a valid future due date.');
+        return;
+    }
+
     const toDo = {
-        id: maxId + 1,
-        name: input.value.trim(),
+        id: tasks[tasks.length - 1]?.id + 1 || 1,
+        name: input.value,
         completed: false,
+        dueDate: dueDate.toISOString(),
     };
+
     tasks.push(toDo);
     saveToLocalStorage();
     renderToDos();
     input.value = '';
+    dueDateInput.value = '';
 };
 
 
@@ -92,64 +103,138 @@ const showAnimation = () => {
 }
 
 const renderToDos = () => {
-    output.innerHTML = ''
-    let filteredTasks = tasks
+    output.innerHTML = '';
+    let filteredTasks = tasks;
 
     if (currentFilter === 'completed') {
-        filteredTasks = tasks.filter(task => task.completed)
+        filteredTasks = tasks.filter(task => task.completed);
     } else if (currentFilter === 'incomplete') {
-        filteredTasks = tasks.filter(task => !task.completed)
+        filteredTasks = tasks.filter(task => !task.completed);
     }
 
-    filteredTasks.forEach(el => {
-        const card = document.createElement('div')
-        card.className = 'card'
+    filteredTasks.forEach((el, index) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.draggable = true;
+        card.dataset.index = index;
+
+        const now = new Date();
+        const dueDate = new Date(el.dueDate);
+
         if (el.completed) {
-            card.classList.add('done')
+            card.classList.add('done');
+        } else if (dueDate < now) {
+            card.classList.add('overdue');
         }
 
-        const title = document.createElement('h2')
-        const btnsWrapper = document.createElement('div')
-        const done = document.createElement('button')
-        const edit = document.createElement('button')
-        const trash = document.createElement('button')
+        const title = document.createElement('h2');
+        const dueDateLabel = document.createElement('p');
+        const btnsWrapper = document.createElement('div');
+        const done = document.createElement('button');
+        const edit = document.createElement('button');
+        const trash = document.createElement('button');
 
-        title.textContent = el.name
-        done.innerHTML = imgDone
-        edit.innerHTML = imgEdit
-        trash.innerHTML = imgTrash
+        title.textContent = el.name;
+        dueDateLabel.textContent = `Due: ${dueDate.toLocaleString()}`;
+        done.innerHTML = imgDone;
+        edit.innerHTML = imgEdit;
+        trash.innerHTML = imgTrash;
 
         done.addEventListener('click', () => {
-            el.completed = !el.completed
-            saveToLocalStorage()
-            renderToDos()
-            if (el.completed) showAnimation()
-        })
+            el.completed = !el.completed;
+            saveToLocalStorage();
+            renderToDos();
+        });
 
         edit.addEventListener('click', () => {
-            const newName = prompt('Enter the new name', el.name)
-            if (newName && newName.trim().length) {
-                el.name = newName.trim()
-                saveToLocalStorage()
-                renderToDos()
+            const newName = prompt('Enter the new name', el.name);
+            const newDueDate = prompt('Enter the new due date (YYYY-MM-DD HH:mm)', el.dueDate);
+            if (newName && newName.trim().length && newDueDate) {
+                el.name = newName.trim();
+                el.dueDate = new Date(newDueDate).toISOString();
+                saveToLocalStorage();
+                renderToDos();
             }
         });
 
         trash.addEventListener('click', () => {
-            const answer = confirm('Are you sure you want to delete this task?')
+            const answer = confirm('Are you sure you want to delete this task?');
             if (answer) {
-                tasks = tasks.filter(item => item.id !== el.id)
-                saveToLocalStorage()
-                renderToDos()
+                tasks = tasks.filter(item => item.id !== el.id);
+                saveToLocalStorage();
+                renderToDos();
             }
         });
 
-        btnsWrapper.append(done, edit, trash)
-        card.append(title, btnsWrapper)
-        output.append(card)
-    })
-}
+        btnsWrapper.append(done, edit, trash);
+        card.append(title, dueDateLabel, btnsWrapper);
+        output.append(card);
 
+        card.addEventListener('dragstart', (e) => {
+            e.dataTransfer.setData('text/plain', e.target.dataset.index);
+            e.target.classList.add('dragging');
+        });
+
+        card.addEventListener('dragend', (e) => {
+            e.target.classList.remove('dragging');
+        });
+    });
+
+    output.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        const draggingCard = document.querySelector('.dragging');
+        const afterElement = getDragAfterElement(output, e.clientY);
+        if (afterElement == null) {
+            output.appendChild(draggingCard);
+        } else {
+            output.insertBefore(draggingCard, afterElement);
+        }
+    });
+
+    output.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const draggingIndex = e.dataTransfer.getData('text/plain');
+        const newIndex = [...output.children].findIndex(
+            (child) => child === document.querySelector('.dragging')
+        );
+
+        const [movedTask] = tasks.splice(draggingIndex, 1);
+        tasks.splice(newIndex, 0, movedTask);
+        saveToLocalStorage();
+        renderToDos();
+    });
+};
+
+const getDragAfterElement = (container, y) => {
+    const draggableElements = [...container.querySelectorAll('.card:not(.dragging)')];
+
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+            return { offset, element: child };
+        } else {
+            return closest;
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+};
+
+
+const notifyOverdueTasks = () => {
+    const now = new Date();
+    tasks.forEach(task => {
+        if (!task.completed && new Date(task.dueDate) < now && !task.notified) {
+            alert(`Task "${task.name}" is overdue!`);
+            task.notified = true;
+        }
+    });
+    saveToLocalStorage(); 
+};  
+
+setInterval(() => {
+    notifyOverdueTasks();
+    renderToDos();
+}, 60000);
 
 const updateFilterButtonStyles = () => {
     document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
