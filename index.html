@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do</title>
+    <link rel="stylesheet" href="./to_do/css/style.css">
+</head>
+
+<body>
+    <h1>ToDo - List</h1>
+    <div class="filter-buttons">
+        <button id="allFilter">All</button>
+        <button id="completedFilter">Completed</button>
+        <button id="incompleteFilter">Incomplete</button>
+    </div>
+    <form>
+        <input placeholder="Task" class="input" id="inp" name="text" type="text">
+        <input type="datetime-local" id="dueDate" placeholder="Due Date" required />
+        <button>Add Task</button>
+    </form>
+
+    <div id="output"></div>
+
+    <script src="./to_do/script/index.js"></script>
+</body>
+
+</html>
