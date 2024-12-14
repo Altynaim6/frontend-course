@@ -1,35 +1,35 @@
-const form = document.querySelector('form')
-const input = document.querySelector('#inp')
-const output = document.querySelector('#output')
-const allFilterBtn = document.querySelector('#allFilter')
-const completedFilterBtn = document.querySelector('#completedFilter')
-const incompleteFilterBtn = document.querySelector('#incompleteFilter')
+const form = document.querySelector('form');
+const input = document.querySelector('#inp');
+const output = document.querySelector('#output');
+const allFilterBtn = document.querySelector('#allFilter');
+const completedFilterBtn = document.querySelector('#completedFilter');
+const incompleteFilterBtn = document.querySelector('#incompleteFilter');
 
 let imgDone = `
 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check2-square" viewBox="0 0 16 16">
   <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
   <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
 </svg>
-`
+`;
 
 let imgEdit = `
 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
 </svg>
-`
+`;
 
 let imgTrash = `
 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
   <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
 </svg>
-`
+`;
 
-let tasks = JSON.parse(localStorage.getItem('tasks')) || []
-let currentFilter = 'all'
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+let currentFilter = 'all';
 
-const API = 'https://jsonplaceholder.typicode.com/todos'
+const API = 'https://jsonplaceholder.typicode.com/todos';
 const getTasks = async () => {
     if (tasks.length) return;
     try {
@@ -48,13 +48,12 @@ const getTasks = async () => {
     }
 };
 
-
 const saveToLocalStorage = () => {
-    localStorage.setItem('tasks', JSON.stringify(tasks))
-}
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+};
 
 const addToDo = (e) => {
-    e.preventDefault(); //предотвратить перезагружение страницы
+    e.preventDefault();
     if (!input.value.trim().length) {
         alert("You didn't write anything!");
         return;
@@ -82,7 +81,6 @@ const addToDo = (e) => {
     dueDateInput.value = '';
 };
 
-
 const showAnimation = () => {
     const body = document.querySelector('body')
     if (!body.classList.contains('firework-bg')) {
@@ -90,10 +88,10 @@ const showAnimation = () => {
 
         for (let i = 0; i < 5; i++) {
             const firework = document.createElement('div')
-            firework.className = 'firework'
-            firework.style.left = `${Math.random() * 100}%`
-            firework.style.top = `${Math.random() * 100}%`
-            firework.style.animationDelay = `${Math.random() * 1}s`
+            firework.className = 'firework';
+            firework.style.left = `${Math.random() * 100}%`;
+            firework.style.top = `${Math.random() * 100}%`;
+            firework.style.animationDelay = `${Math.random() * 1} s`;
             body.appendChild(firework)
             setTimeout(() => firework.remove(), 2000)
         }
@@ -112,11 +110,9 @@ const renderToDos = () => {
         filteredTasks = tasks.filter(task => !task.completed);
     }
 
-    filteredTasks.forEach((el, index) => {
+    filteredTasks.forEach(el => {
         const card = document.createElement('div');
         card.className = 'card';
-        card.draggable = true;
-        card.dataset.index = index;
 
         const now = new Date();
         const dueDate = new Date(el.dueDate);
@@ -144,6 +140,10 @@ const renderToDos = () => {
             el.completed = !el.completed;
             saveToLocalStorage();
             renderToDos();
+
+            if (el.completed) {
+                showAnimation();
+            }
         });
 
         edit.addEventListener('click', () => {
@@ -169,56 +169,8 @@ const renderToDos = () => {
         btnsWrapper.append(done, edit, trash);
         card.append(title, dueDateLabel, btnsWrapper);
         output.append(card);
-
-        card.addEventListener('dragstart', (e) => {
-            e.dataTransfer.setData('text/plain', e.target.dataset.index);
-            e.target.classList.add('dragging');
-        });
-
-        card.addEventListener('dragend', (e) => {
-            e.target.classList.remove('dragging');
-        });
-    });
-
-    output.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        const draggingCard = document.querySelector('.dragging');
-        const afterElement = getDragAfterElement(output, e.clientY);
-        if (afterElement == null) {
-            output.appendChild(draggingCard);
-        } else {
-            output.insertBefore(draggingCard, afterElement);
-        }
-    });
-
-    output.addEventListener('drop', (e) => {
-        e.preventDefault();
-        const draggingIndex = e.dataTransfer.getData('text/plain');
-        const newIndex = [...output.children].findIndex(
-            (child) => child === document.querySelector('.dragging')
-        );
-
-        const [movedTask] = tasks.splice(draggingIndex, 1);
-        tasks.splice(newIndex, 0, movedTask);
-        saveToLocalStorage();
-        renderToDos();
     });
 };
-
-const getDragAfterElement = (container, y) => {
-    const draggableElements = [...container.querySelectorAll('.card:not(.dragging)')];
-
-    return draggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect();
-        const offset = y - box.top - box.height / 2;
-        if (offset < 0 && offset > closest.offset) {
-            return { offset, element: child };
-        } else {
-            return closest;
-        }
-    }, { offset: Number.NEGATIVE_INFINITY }).element;
-};
-
 
 const notifyOverdueTasks = () => {
     const now = new Date();
@@ -228,8 +180,8 @@ const notifyOverdueTasks = () => {
             task.notified = true;
         }
     });
-    saveToLocalStorage(); 
-};  
+    saveToLocalStorage();
+};
 
 setInterval(() => {
     notifyOverdueTasks();
@@ -261,15 +213,15 @@ incompleteFilterBtn.addEventListener('click', () => {
     renderToDos();
 });
 
-form.addEventListener('submit', addToDo)
+form.addEventListener('submit', addToDo);
 
 const addFromLS = () => {
-    const data = JSON.parse(localStorage.getItem('tasks'))
+    const data = JSON.parse(localStorage.getItem('tasks'));
     if (data) {
-        tasks = data
-        renderToDos()
+        tasks = data;
+        renderToDos();
     }
-}
+};
 
-addFromLS()
-getTasks()
+addFromLS();
+getTasks();

@@ -154,6 +154,23 @@ button:hover {
     fill: #EC8305;
 }
 
+.card.dragging {
+    transform: scale(1.05);
+    opacity: 100%;
+}
+
+.drop-zone {
+    height: 4px;
+    background-color: #828dff;
+    border-radius: 2px;
+    margin: 0 10px;
+}
+
+.drop-zone.active {
+    background-color: #EC8305;
+}
+
+
 .firework {
     --initialSize: 0.5vmin;
     --finalSize: 45vmin;
