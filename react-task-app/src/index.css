@@ -1,0 +1,95 @@
+/* Общий стиль для body */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f3f4f6;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+/* Контейнер приложения */
+#root>div {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 600px;
+  padding: 20px;
+}
+
+/* Заголовок */
+h1 {
+  color: #4a4e69;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Секция ввода */
+input[type="text"] {
+  width: calc(100% - 70px);
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #dcdfe6;
+  border-radius: 5px;
+  outline: none;
+  margin-right: 10px;
+  transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #6c63ff;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #6c63ff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #5953c7;
+}
+
+/* Список задач */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0 0;
+}
+
+li {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li:hover {
+  background-color: #f1f5f9;
+}
+
+li button {
+  background-color: #ff6b6b;
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+}
+
+li button:hover {
+  background-color: #e63946;
+}

@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-export function useTaskManager() {
+const useTaskManager = () => {
     const [tasks, setTasks] = useState([]);
 
     const addTask = (task) => {
-        setTasks([...tasks, task]);
+        if (task.trim() !== '') {
+            setTasks([...tasks, task]);
+        }
     };
 
     const deleteTask = (index) => {
@@ -12,4 +14,6 @@ export function useTaskManager() {
     };
 
     return { tasks, addTask, deleteTask };
-}
+};
+
+export default useTaskManager;

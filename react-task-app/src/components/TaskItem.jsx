@@ -1,6 +1,12 @@
-function TaskItem({ task }) {
-    return <li>{task}</li>;
-  }
-  
-  export default TaskItem;
-  
+import React from 'react';
+
+function TaskItem({ task, onDelete }) {
+    return (
+        <li>
+            <span>{task}</span>
+            <button onClick={onDelete}>Delete</button>
+        </li>
+    );
+}
+
+export default TaskItem;
